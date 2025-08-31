@@ -1,7 +1,6 @@
 export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
-// relative import (FIX)
 import { getFilePath, fileUrl } from "../../../lib/telegram";
 import { toStickerWebp512 } from "../../../lib/image";
 import JSZip from "jszip";
@@ -12,7 +11,9 @@ export async function POST(req: Request) {
   try {
     const body = (await req.json()) as Body;
     const ids = Array.from(new Set(body?.file_ids || [])).slice(0, 60);
-    if (!ids.length) return NextResponse.json({ ok: false, error: "file_ids required" }, { status: 400 });
+    if (!ids.length) {
+      return NextResponse.json({ ok: false, error: "file_ids required" }, { status: 400 });
+    }
 
     const zip = new JSZip();
     let idx = 1;
@@ -28,14 +29,14 @@ export async function POST(req: Request) {
         zip.file(`${idx.toString().padStart(2, "0")}-${file_id}.webp`, webp);
         idx++;
       } catch {
-        // skip error per sticker
+        // skip individual error
       }
     }
 
     const out = await zip.generateAsync({ type: "uint8array", compression: "DEFLATE" });
 
-    // FIX: langsung pakai Uint8Array (hasil generateAsync sudah Uint8Array)
-    return new NextResponse(out, {
+    // FIX: kirim ArrayBuffer, bukan Uint8Array langsung
+    return new NextResponse(out.buffer, {
       headers: {
         "Content-Type": "application/zip",
         "Content-Disposition": `attachment; filename="stickers.zip"`
