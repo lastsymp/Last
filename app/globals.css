@@ -1,0 +1,9 @@
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+button { cursor: pointer; }
+.container { max-width: 900px; margin: 24px auto; padding: 16px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(120px,1fr)); gap: 12px; }
+.card { border: 1px solid #ddd; border-radius: 12px; padding: 12px; text-align: center; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+input, button { padding: 10px 12px; border-radius: 10px; border: 1px solid #ccc; }
+button.primary { background: #0ea5e9; color: white; border: none; }
