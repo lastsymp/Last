@@ -35,8 +35,10 @@ export async function POST(req: Request) {
 
     const out = await zip.generateAsync({ type: "uint8array", compression: "DEFLATE" });
 
-    // FIX: kirim ArrayBuffer, bukan Uint8Array langsung
-    return new NextResponse(out.buffer, {
+    // ✅ FIX: bungkus Uint8Array jadi Blob agar BodyInit valid
+    const blob = new Blob([out], { type: "application/zip" });
+
+    return new NextResponse(blob, {
       headers: {
         "Content-Type": "application/zip",
         "Content-Disposition": `attachment; filename="stickers.zip"`
