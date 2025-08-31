@@ -1,7 +1,8 @@
 export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
-import { getStickerSet } from "@/lib/telegram";
+// relative import (FIX)
+import { getStickerSet } from "../../../lib/telegram";
 
 export async function GET(req: Request) {
   try {
@@ -10,7 +11,6 @@ export async function GET(req: Request) {
     if (!name) return NextResponse.json({ ok: false, error: "name required" }, { status: 400 });
 
     const set = await getStickerSet(name);
-    // filter statis saja (bukan animated/video) untuk fase awal
     const stickers = (set.stickers || []).filter(s => !s.is_animated && !s.is_video);
 
     return NextResponse.json({
