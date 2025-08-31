@@ -1,6 +1,6 @@
 {
   "name": "tg-wa-sticker-converter",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
@@ -13,6 +13,12 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "sharp": "0.33.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "@types/react": "^18.3.3",
+    "@types/node": "^20.14.12",
+    "@types/jszip": "^3.4.1"
   },
   "engines": {
     "node": ">=18"
