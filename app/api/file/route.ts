@@ -20,7 +20,8 @@ export async function GET(req: Request) {
     const input = await raw.arrayBuffer();
     const webp = await toStickerWebp512(input);
 
-    return new NextResponse(webp, {
+    // FIX: bungkus Buffer → Uint8Array
+    return new NextResponse(new Uint8Array(webp), {
       headers: {
         "Content-Type": "image/webp",
         "Content-Disposition": `attachment; filename="${file_id}.webp"`
