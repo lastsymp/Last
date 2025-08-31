@@ -28,11 +28,13 @@ export async function POST(req: Request) {
         zip.file(`${idx.toString().padStart(2, "0")}-${file_id}.webp`, webp);
         idx++;
       } catch {
-        // skip individual failure
+        // skip error per sticker
       }
     }
 
     const out = await zip.generateAsync({ type: "uint8array", compression: "DEFLATE" });
+
+    // FIX: langsung pakai Uint8Array (hasil generateAsync sudah Uint8Array)
     return new NextResponse(out, {
       headers: {
         "Content-Type": "application/zip",
