@@ -1,8 +1,9 @@
 export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
-import { getFilePath, fileUrl } from "@/lib/telegram";
-import { toStickerWebp512 } from "@/lib/image";
+// relative import (FIX)
+import { getFilePath, fileUrl } from "../../../lib/telegram";
+import { toStickerWebp512 } from "../../../lib/image";
 
 export async function GET(req: Request) {
   try {
